@@ -8,7 +8,7 @@ public class Column implements Serializable {
     private final String name;
     private final DataType type;
     private final boolean primaryKey;
-    private final String refTable;   // null, если ссылки на другую таблицу нет
+    private final String refTable;
     private final String refColumn;
 
     public Column(String name, DataType type, boolean primaryKey) {

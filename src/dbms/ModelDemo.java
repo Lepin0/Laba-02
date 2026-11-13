@@ -15,12 +15,12 @@ public class ModelDemo {
         cars.insert(new Row(Arrays.<Object>asList(2, "BMW", null, false)));
 
         try {
-            cars.insert(new Row(Arrays.<Object>asList(1, "Audi", 1.0, true))); // дубликат id
+            cars.insert(new Row(Arrays.<Object>asList(1, "Audi", 1.0, true)));
         } catch (IllegalArgumentException e) {
             System.out.println("Ожидаемая ошибка: " + e.getMessage());
         }
         try {
-            cars.insert(new Row(Arrays.<Object>asList(3, "Audi", "дорого", true))); // строка вместо числа
+            cars.insert(new Row(Arrays.<Object>asList(3, "Audi", "дорого", true)));
         } catch (IllegalArgumentException e) {
             System.out.println("Ожидаемая ошибка: " + e.getMessage());
         }

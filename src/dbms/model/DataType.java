@@ -17,7 +17,7 @@ public enum DataType {
                 case STRING:
                     return text;
                 case DATE:
-                    return LocalDate.parse(t); // формат 2026-11-15
+                    return LocalDate.parse(t);
                 case BOOLEAN:
                     if (t.equalsIgnoreCase("true")) return true;
                     if (t.equalsIgnoreCase("false")) return false;

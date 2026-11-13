@@ -10,7 +10,7 @@ public class Row implements Serializable {
     private final List<Object> values;
 
     public Row(List<Object> values) {
-        this.values = new ArrayList<>(values); // копия, чтобы снаружи не меняли
+        this.values = new ArrayList<>(values);
     }
 
     public Object get(int index) { return values.get(index); }
