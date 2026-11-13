@@ -27,5 +27,12 @@ public class ModelDemo {
 
         for (Row r : cars.getRows()) System.out.println(r);
         System.out.println(DataType.INT.parse("42") + " " + DataType.DATE.parse("2026-11-15"));
+
+        dbms.storage.Database db = new dbms.storage.Database("data");
+        if (!db.hasTable("cars")) {
+            db.addTable(cars);
+            System.out.println("Таблица создана и сохранена");
+        }
+        System.out.println("Загружено: " + db.getTable("CARS").getRows());
     }
 }
