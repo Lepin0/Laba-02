@@ -34,5 +34,16 @@ public class ModelDemo {
             System.out.println("Таблица создана и сохранена");
         }
         System.out.println("Загружено: " + db.getTable("CARS").getRows());
+
+        dbms.storage.Database db2 = new dbms.storage.Database("data");
+        Table t = db2.getTable("cars");
+        if (t.indexForColumn(t.columnIndex("brand")) == null) {
+            t.createIndex("idx_cars_brand", "brand");
+            db2.save(t);
+            System.out.println("Индекс создан");
+        } else {
+            System.out.println("Индекс уже загружен с диска");
+        }
+        System.out.println(t.indexForColumn(t.columnIndex("brand")).find("BMW"));
     }
 }

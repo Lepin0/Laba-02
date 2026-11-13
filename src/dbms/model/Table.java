@@ -3,13 +3,16 @@ package dbms.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import dbms.index.Index;
+
 
 public class Table implements Serializable {
     private static final long serialVersionUID = 1L;
     private final String name;
     private final List<Column> columns;
     private final List<Row> rows = new ArrayList<>();
+    private final Map<String, Index> indexes = new LinkedHashMap<>();
 
     public Table(String name, List<Column> columns) {
         long pkCount = columns.stream().filter(Column::isPrimaryKey).count();
@@ -38,26 +41,46 @@ public class Table implements Serializable {
         throw new IllegalStateException("Нет первичного ключа");
     }
 
-    public void insert(Row row) {
-        if (row.size() != columns.size()) {
-            throw new IllegalArgumentException("Ожидалось значений: " + columns.size() + ", получено: " + row.size());
+    public void createIndex(String indexName, String columnName) {
+        if (indexes.containsKey(indexName.toLowerCase())) {
+            throw new IllegalArgumentException("Индекс '" + indexName + "' уже существует");
         }
-        for (int i = 0; i < columns.size(); i++) {
-            Column c = columns.get(i);
-            if (!c.getType().accepts(row.get(i))) {
-                throw new IllegalArgumentException("Столбец " + c.getName() + " имеет тип " + c.getType());
-            }
-        }
-        int pk = primaryKeyIndex();
-        Object key = row.get(pk);
-        if (key == null) {
-            throw new IllegalArgumentException("Первичный ключ не может быть пустым");
-        }
-        for (Row existing : rows) {
-            if (existing.get(pk).equals(key)) {
-                throw new IllegalArgumentException("Дубликат первичного ключа: " + key);
-            }
-        }
-        rows.add(row);
+        Index idx = new Index(indexName, columnIndex(columnName));
+        idx.rebuild(rows);
+        indexes.put(indexName.toLowerCase(), idx);
     }
-}
+
+    public Index indexForColumn(int columnIdx) {
+        for (Index i : indexes.values()) {
+            if (i.getColumnIndex() == columnIdx) return i;
+        }
+        return null;
+    }
+
+    public void rebuildIndexes() {
+        for (Index i : indexes.values()) i.rebuild(rows);
+    }
+        public void insert(Row row) {
+            if (row.size() != columns.size()) {
+                throw new IllegalArgumentException("Ожидалось значений: " + columns.size() + ", получено: " + row.size());
+            }
+            for (int i = 0; i < columns.size(); i++) {
+                Column c = columns.get(i);
+                if (!c.getType().accepts(row.get(i))) {
+                    throw new IllegalArgumentException("Столбец " + c.getName() + " имеет тип " + c.getType());
+                }
+            }
+            int pk = primaryKeyIndex();
+            Object key = row.get(pk);
+            if (key == null) {
+                throw new IllegalArgumentException("Первичный ключ не может быть пустым");
+            }
+            for (Row existing : rows) {
+                if (existing.get(pk).equals(key)) {
+                    throw new IllegalArgumentException("Дубликат первичного ключа: " + key);
+                }
+            }
+            rows.add(row);
+            for (Index i : indexes.values()) i.add(row);
+        }
+    }

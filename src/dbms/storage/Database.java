@@ -1,6 +1,6 @@
 package dbms.storage;
 
-import dbms.model.Table;
+import dbms.model.*;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -56,5 +56,28 @@ public class Database {
 
     public void save(Table table) {
         repository.save(table);
+    }
+
+    public void insertRow(Table table, Row row) {
+        for (int i = 0; i < table.getColumns().size(); i++) {
+            Column c = table.getColumns().get(i);
+            Object value = row.get(i);
+            if (c.getRefTable() == null || value == null) continue;
+            Table parent = getTable(c.getRefTable());
+            int pi = parent.columnIndex(c.getRefColumn());
+            boolean found = false;
+            for (Row r : parent.getRows()) {
+                if (value.equals(r.get(pi))) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                throw new IllegalArgumentException("Нет записи " + c.getRefTable() + "."
+                        + c.getRefColumn() + " = " + value + " (столбец " + c.getName() + ")");
+            }
+        }
+        table.insert(row);
+        save(table);
     }
 }
