@@ -9,6 +9,7 @@ import java.nio.file.*;
 import java.util.Comparator;
 import java.util.stream.Stream;
 
+/** Автоматические тесты на временной базе. */
 public class AutoTests {
     private static int passed = 0;
     private static int failed = 0;

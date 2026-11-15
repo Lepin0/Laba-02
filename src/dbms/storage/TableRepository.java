@@ -5,9 +5,11 @@ import dbms.model.Table;
 import java.io.*;
 import java.nio.file.*;
 
+/** Хранение таблиц в файлах {@code <имя>.tbl} (паттерн Repository). */
 public class TableRepository {
     private final Path dir;
 
+    /** Открывает каталог, создавая его при необходимости. */
     public TableRepository(String directory) {
         this.dir = Paths.get(directory);
         try {
@@ -20,7 +22,7 @@ public class TableRepository {
     private Path fileFor(String tableName) {
         return dir.resolve(tableName + ".tbl");
     }
-
+    /** Сохраняет таблицу: запись во временный файл, затем атомарная замена основного. */
     public void save(Table table) {
         Path tmp = dir.resolve(table.getName() + ".tbl.tmp");
         try (ObjectOutputStream out = new ObjectOutputStream(
@@ -37,6 +39,7 @@ public class TableRepository {
         }
     }
 
+    /** Загружает таблицу из файла. */
     public Table load(Path file) {
         try (ObjectInputStream in = new ObjectInputStream(
                 new BufferedInputStream(Files.newInputStream(file)))) {
@@ -45,7 +48,7 @@ public class TableRepository {
             throw new RuntimeException("Ошибка чтения " + file, e);
         }
     }
-
+    /** Загружает все таблицы из каталога. */
     public java.util.List<Table> loadAll() {
         java.util.List<Table> result = new java.util.ArrayList<>();
         try (DirectoryStream<Path> files = Files.newDirectoryStream(dir, "*.tbl")) {
@@ -56,6 +59,7 @@ public class TableRepository {
         return result;
     }
 
+    /** Удаляет файл таблицы (DROP TABLE). */
     public void delete(String tableName) {
         try {
             Files.deleteIfExists(fileFor(tableName));

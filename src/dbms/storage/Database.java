@@ -7,10 +7,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/** База данных: таблицы в памяти, синхронизированные с файлами на диске. */
 public class Database {
     private final Map<String, Table> tables = new LinkedHashMap<>();
     private final TableRepository repository;
 
+    /** Открывает базу в каталоге и загружает все сохранённые таблицы. */
     public Database(String directory) {
         this.repository = new TableRepository(directory);
         for (Table t : repository.loadAll()) {
@@ -18,6 +20,7 @@ public class Database {
         }
     }
 
+    /** Имена таблиц не зависят от регистра. */
     private static String key(String name) {
         return name.toLowerCase();
     }
@@ -25,7 +28,7 @@ public class Database {
     public boolean hasTable(String name) {
         return tables.containsKey(key(name));
     }
-
+    /** Возвращает таблицу по имени. */
     public Table getTable(String name) {
         Table t = tables.get(key(name));
         if (t == null) {
@@ -40,6 +43,7 @@ public class Database {
         return names;
     }
 
+    /** Добавляет таблицу (CREATE TABLE) и сохраняет на диск. */
     public void addTable(Table table) {
         if (hasTable(table.getName())) {
             throw new IllegalArgumentException("Таблица '" + table.getName() + "' уже существует");
@@ -48,16 +52,18 @@ public class Database {
         repository.save(table);
     }
 
+    /** Удаляет таблицу из памяти и с диска (DROP TABLE). */
     public void dropTable(String name) {
         Table t = getTable(name); // бросит ошибку, если таблицы нет
         tables.remove(key(name));
         repository.delete(t.getName());
     }
 
+    /** Сохраняет таблицу на диск; вызывается после INSERT, UPDATE, DELETE. */
     public void save(Table table) {
         repository.save(table);
     }
-
+    /** Вставляет строку, проверив внешние ключи, и сохраняет таблицу.*/
     public void insertRow(Table table, Row row) {
         for (int i = 0; i < table.getColumns().size(); i++) {
             Column c = table.getColumns().get(i);

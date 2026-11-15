@@ -5,6 +5,7 @@ import dbms.model.*;
 import java.util.Arrays;
 import java.util.Random;
 
+/** Замер скорости поиска без индекса и с индексом. */
 public class Benchmark {
     private static final int SCAN_QUERIES = 200;
     private static final int INDEX_QUERIES = 20_000;

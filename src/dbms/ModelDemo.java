@@ -3,6 +3,7 @@ package dbms;
 import dbms.model.*;
 import java.util.Arrays;
 
+/** Ручная проверка модели данных, хранения и индекса. */
 public class ModelDemo {
     public static void main(String[] args) {
         Table cars = new Table("cars", Arrays.asList(

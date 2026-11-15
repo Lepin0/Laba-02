@@ -3,9 +3,11 @@ package dbms.model;
 import java.time.format.DateTimeParseException;
 import java.time.LocalDate;
 
+/** Поддерживаемые типы данных столбцов. */
 public enum DataType {
     INT, DOUBLE, STRING, DATE, BOOLEAN;
 
+    /**Превращает текст в значение этого типа. */
     public Object parse(String text) {
         String t = text.trim();
         try {
@@ -30,6 +32,7 @@ public enum DataType {
         }
     }
 
+    /** Проверяет, что Java-тип значения соответствует этому типу. {@code null} допустим. */
     public boolean accepts(Object value) {
         if (value == null) return true;
         switch (this) {
