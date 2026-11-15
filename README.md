@@ -11,7 +11,7 @@
 - `INSERT` (одна или несколько строк, с указанием столбцов и без), `SELECT`, `UPDATE`, `DELETE` с одним условием `WHERE`.
 - `CREATE TABLE`, `DROP TABLE`, `SHOW TABLES`.
 - `CREATE INDEX` и ускорение `SELECT ... WHERE col = значение` по индексированному столбцу.
-- Проверка уникальности первичного ключа и существования записи, на которую ссылается внешний ключ.
+- Проверка уникальности первичного ключа и целостности внешних ключей (при `INSERT`, `UPDATE`, `DELETE` и `DROP TABLE`).
 - Сохранение на диск после каждой изменяющей команды, загрузка таблиц и индексов при старте.
 
 ## Инструкция пользователя
@@ -60,7 +60,7 @@ UPDATE cars SET price = 30000 WHERE id = 2;
 DELETE FROM cars WHERE brand = 'Toyota';
 
 CREATE INDEX idx_cars_brand ON cars (brand);
-SELECT * FROM cars WHERE brand = 'Audi';   -- использует индекс
+SELECT * FROM cars WHERE brand = 'Audi';
 DROP TABLE sales;
 ```
 
@@ -274,7 +274,6 @@ sequenceDiagram
 
 1. Oracle. Java SE Documentation: `java.io.Serializable`, `ObjectOutputStream`, `java.nio.file.Files`. https://docs.oracle.com/en/java/javase/
 2. Oracle. The Java Tutorials: Collections, Java I/O. https://docs.oracle.com/javase/tutorial/
-3. Gamma E., Helm R., Johnson R., Vlissides J. Design Patterns: Elements of Reusable Object-Oriented Software (паттерны Command, Repository/Facade).
-4. Garcia-Molina H., Ullman J., Widom J. Database Systems: The Complete Book (индексы, хранение данных).
+3. Java для начинающих: классы, коллекции, работа с файлами  https://www.youtube.com/@alishevN
 5. Документация Mermaid (диаграммы в Markdown). https://mermaid.js.org/
 
