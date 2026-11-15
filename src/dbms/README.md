@@ -274,7 +274,6 @@ sequenceDiagram
 
 1. Oracle. Java SE Documentation: `java.io.Serializable`, `ObjectOutputStream`, `java.nio.file.Files`. https://docs.oracle.com/en/java/javase/
 2. Oracle. The Java Tutorials: Collections, Java I/O. https://docs.oracle.com/javase/tutorial/
-3. Gamma E., Helm R., Johnson R., Vlissides J. Design Patterns: Elements of Reusable Object-Oriented Software (паттерны Command, Repository/Facade).
-4. Garcia-Molina H., Ullman J., Widom J. Database Systems: The Complete Book (индексы, хранение данных).
-5. Документация Mermaid (диаграммы в Markdown). https://mermaid.js.org/
+3. Java для начинающих: классы, коллекции, работа с файлами  https://www.youtube.com/@alishevN
+4. Документация Mermaid (диаграммы в Markdown). https://mermaid.js.org/
 
