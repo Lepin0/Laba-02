@@ -9,17 +9,20 @@ import dbms.storage.Database;
 import java.util.ArrayList;
 import java.util.List;
 
+/** SELECT: выбирает строки. Если есть подходящий индекс, использует его. */
 public final class SelectCommand implements Command {
     private final String tableName;
     private final List<String> columns;
     private final Condition where;
 
+    /** Создаёт команду: таблица, столбцы (или null, если все) и условие (или null). */
     public SelectCommand(String tableName, List<String> columns, Condition where) {
         this.tableName = tableName;
         this.columns = columns;
         this.where = where;
     }
 
+    /** Выбирает строки и возвращает их таблицей. */
     @Override
     public Result execute(Database db) {
         Table table = db.getTable(tableName);

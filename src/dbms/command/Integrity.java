@@ -10,9 +10,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/** Проверки связей между таблицами (внешние ключи). */
 final class Integrity {
     private Integrity() { }
 
+    /** Собирает значения, на которые ссылаются другие таблицы. Ключ - номер столбца. */
     static Map<Integer, Set<Object>> referencedValues(Database db, Table table) {
         Map<Integer, Set<Object>> result = new HashMap<>();
         for (String name : db.tableNames()) {
@@ -35,6 +37,7 @@ final class Integrity {
         return result;
     }
 
+    /** Проверяет, что в главной таблице есть запись, на которую мы ссылаемся. */
     static void requireParentExists(Database db, Column column, Object value) {
         Table parent = db.getTable(column.getRefTable());
         int pi = parent.columnIndex(column.getRefColumn());

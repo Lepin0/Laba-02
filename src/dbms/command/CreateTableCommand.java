@@ -8,15 +8,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/** CREATE TABLE: создаёт новую таблицу. */
 public final class CreateTableCommand implements Command {
     private final String tableName;
     private final List<Column> columns;
 
+    /** Создаёт команду: имя таблицы и список столбцов. */
     public CreateTableCommand(String tableName, List<Column> columns) {
         this.tableName = tableName;
         this.columns = columns;
     }
 
+    /** Создаёт таблицу. */
     @Override
     public Result execute(Database db) {
         Set<String> names = new HashSet<>();

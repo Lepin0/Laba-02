@@ -10,8 +10,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/** Консольная программа. Команда заканчивается знаком ; и может занимать несколько строк. */
 public class Main {
 
+    /** Запускает программу. Можно указать папку с данными, по умолчанию data. */
     public static void main(String[] args) throws IOException {
         String directory = args.length > 0 ? args[0] : "data";
         Database db = new Database(directory);
@@ -46,6 +48,7 @@ public class Main {
         System.out.println("До свидания!");
     }
 
+    /** Разбирает и выполняет одну команду, печатает результат или ошибку. */
     private static void run(Database db, String sql) {
         long start = System.nanoTime();
         try {

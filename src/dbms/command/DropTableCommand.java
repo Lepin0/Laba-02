@@ -4,13 +4,16 @@ import dbms.model.Column;
 import dbms.model.Table;
 import dbms.storage.Database;
 
+/** DROP TABLE: удаляет таблицу. Нельзя, если на неё ссылаются другие таблицы. */
 public final class DropTableCommand implements Command {
     private final String tableName;
 
+    /** Создаёт команду: имя таблицы. */
     public DropTableCommand(String tableName) {
         this.tableName = tableName;
     }
 
+    /** Удаляет таблицу. */
     @Override
     public Result execute(Database db) {
         Table target = db.getTable(tableName);

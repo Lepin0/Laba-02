@@ -11,15 +11,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/** DELETE: удаляет подходящие строки. Нельзя удалить строку, на которую ссылается другая таблица. */
 public final class DeleteCommand implements Command {
     private final String tableName;
     private final Condition where;
 
+    /** Создаёт команду: таблица и условие (или null, тогда удаляются все строки). */
     public DeleteCommand(String tableName, Condition where) {
         this.tableName = tableName;
         this.where = where;
     }
 
+    /** Удаляет строки. */
     @Override
     public Result execute(Database db) {
         Table table = db.getTable(tableName);

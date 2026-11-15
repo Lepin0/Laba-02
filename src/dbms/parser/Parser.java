@@ -7,12 +7,14 @@ import dbms.model.DataType;
 import java.util.ArrayList;
 import java.util.List;
 
+/** Разбирает запрос и создаёт готовую команду. */
 public final class Parser {
     private final List<Token> tokens;
     private int pos = 0;
 
     private Parser(List<Token> tokens) { this.tokens = tokens; }
 
+    /** Разбирает один запрос. При ошибке в запросе бросает исключение. */
     public static Command parse(String sql) {
         Parser p = new Parser(Tokenizer.tokenize(sql));
         Command command = p.statement();
