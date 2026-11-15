@@ -13,17 +13,20 @@ import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Set;
 
+/** INSERT INTO: добавляет одну или несколько строк. Если одна строка не прошла проверку, добавленные ранее отменяются. */
 public final class InsertCommand implements Command {
     private final String tableName;
     private final List<String> columns;
     private final List<List<Token>> tuples;
 
+    /** Создаёт команду: таблица, столбцы (или null, если все) и значения. */
     public InsertCommand(String tableName, List<String> columns, List<List<Token>> tuples) {
         this.tableName = tableName;
         this.columns = columns;
         this.tuples = tuples;
     }
 
+    /** Добавляет строки в таблицу. */
     @Override
     public Result execute(Database db) {
         Table table = db.getTable(tableName);

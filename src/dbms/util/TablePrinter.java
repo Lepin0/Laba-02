@@ -3,9 +3,11 @@ package dbms.util;
 import java.util.ArrayList;
 import java.util.List;
 
+/** Печатает результат запроса красивой таблицей. */
 public final class TablePrinter {
     private TablePrinter() { }
 
+    /** Собирает текст таблицы из заголовков и строк. NULL печатается как NULL. */
     public static String format(List<String> headers, List<List<Object>> rows) {
         int cols = headers.size();
         List<String[]> cells = new ArrayList<>();

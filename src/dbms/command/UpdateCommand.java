@@ -11,12 +11,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/** UPDATE: меняет значения в подходящих строках. Сначала всё проверяет, потом меняет. */
 public final class UpdateCommand implements Command {
     private final String tableName;
     private final List<String> columns;
     private final List<Token> values;
     private final Condition where;
 
+    /** Создаёт команду: таблица, столбцы, новые значения и условие (или null). */
     public UpdateCommand(String tableName, List<String> columns, List<Token> values, Condition where) {
         this.tableName = tableName;
         this.columns = columns;
@@ -24,6 +26,7 @@ public final class UpdateCommand implements Command {
         this.where = where;
     }
 
+    /** Обновляет строки. */
     @Override
     public Result execute(Database db) {
         Table table = db.getTable(tableName);

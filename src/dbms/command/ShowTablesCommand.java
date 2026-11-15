@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/** SHOW TABLES: показывает список таблиц. */
 public final class ShowTablesCommand implements Command {
+
+    /** Возвращает таблицы с числом столбцов и строк. */
     @Override
     public Result execute(Database db) {
         List<List<Object>> rows = new ArrayList<>();

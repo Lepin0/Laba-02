@@ -3,9 +3,11 @@ package dbms.parser;
 import java.util.ArrayList;
 import java.util.List;
 
+/** Режет текст запроса на токены. */
 public final class Tokenizer {
     private Tokenizer() { }
 
+    /** Превращает запрос в список токенов. В конце всегда стоит EOF. */
     public static List<Token> tokenize(String sql) {
         List<Token> tokens = new ArrayList<>();
         int n = sql.length();
