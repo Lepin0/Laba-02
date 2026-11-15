@@ -174,32 +174,33 @@ classDiagram
     Table "1" *-- "*" Row
     Table "1" *-- "*" Index
     Column --> DataType
-    Database "1" o-- "*" Table
-    Database --> TableRepository
-    Parser ..> Command : создаёт
-    Command <|.. InsertCommand
-    Command <|.. SelectCommand
-    Command <|.. UpdateCommand
-    Command <|.. DeleteCommand
-    Command <|.. CreateTableCommand
-    Command <|.. DropTableCommand
-    Command <|.. CreateIndexCommand
-    Command <|.. ShowTablesCommand
-    Command ..> Database : использует
-    Command ..> Result : возвращает
-    SelectCommand --> Condition
-    UpdateCommand --> Condition
-    DeleteCommand --> Condition
-    SelectCommand ..> RowFinder
-    UpdateCommand ..> RowFinder
-    DeleteCommand ..> RowFinder
-    RowFinder ..> Condition
-    RowFinder ..> Index : поиск по индексу
-    UpdateCommand ..> Integrity
-    DeleteCommand ..> Integrity
-    DropTableCommand ..> Integrity
-    Integrity ..> Database
+Database "1" o-- "*" Table
+Database --> TableRepository
+Parser ..> Command : создаёт
+Command <|.. InsertCommand
+Command <|.. SelectCommand
+Command <|.. UpdateCommand
+Command <|.. DeleteCommand
+Command <|.. CreateTableCommand
+Command <|.. DropTableCommand
+Command <|.. CreateIndexCommand
+Command <|.. ShowTablesCommand
+Command ..> Database : использует
+Command ..> Result : возвращает
+SelectCommand --> Condition
+UpdateCommand --> Condition
+DeleteCommand --> Condition
+SelectCommand ..> RowFinder
+UpdateCommand ..> RowFinder
+DeleteCommand ..> RowFinder
+RowFinder ..> Condition
+RowFinder ..> Index : поиск по индексу
+UpdateCommand ..> Integrity
+DeleteCommand ..> Integrity
+DropTableCommand ..> Integrity
+Integrity ..> Database
 ```
+
 
 ### Диаграмма последовательностей: `INSERT`
 
